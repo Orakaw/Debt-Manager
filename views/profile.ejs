@@ -1,0 +1,76 @@
+    <!doctype html>
+    <html>
+    <head>
+        <title>Debt Manager</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="container">
+
+        <h1>Debt Manager<h1>
+
+        <div class="row">
+
+
+            <div >
+                <div >
+                    <h3><span class="fa fa-user"></span> User</h3>
+
+                    <% if (user.local.email) { %>
+                        <p>
+                            <strong>email</strong>: <%= user.local.email %>
+
+                        </p>
+                        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+
+
+
+
+                        <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                    <% } else { %>
+                        <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                    <% } %>
+
+
+                </div>
+            </div>
+            <div >
+              <h3>Debt</h3>
+
+              <dl class="debt">
+                <ul class="debt">
+                <% for(var i=0; i<debt.length; i++) {%>
+                    <li>
+                      <p>Debter:</p><span data-db-value="<%= debt[i].debter %>"><%= debt[i].debter %></span>
+                      <p>Borrowed:</p><span data-db-value="<%= debt[i].dbt %>">$<%= debt[i].dbt %></span>
+                      <p>Interest Rate:</p><span data-db-value="<%= debt[i].ir %>"><%= debt[i].ir %>%</span>
+                      <p>Starting Owed Amount:</p><span data-db-value="<%= debt[i].owe %>">$<%= debt[i].owe %></span>
+                      <p>Paid Off:</p><span data-db-value="<%= debt[i].amountPaid %>">$<%= debt[i].amountPaid %></span>
+                      <p>Subtotal:</p><span data-db-value="<%= debt[i].sub %>">$<%= debt[i].owe - debt[i].amountPaid %></span>
+
+                      <button type="button" data-objectId="<%= debt[i]._id %>"class="paid" name="paid">Paid Off</button>
+                      <input type="text" class="amountPaid"name="amountPaid" >
+                      <button type="button" class="pay"data-objectId="<%= debt[i]._id %>"name="button">Paid Some</button>
+                    </li>
+
+
+                <% } %>
+              </ul>
+
+            <% if (user.local.email) { %>
+              <form action="/person" method="POST">
+                <input type="text" placeholder="Debter" name="debter">
+                <input type="text" class="money"placeholder="Borrowed Amount" name="dbt">
+                <input type="text" class="interest"placeholder="Interest Rate %" name="ir">
+                <button id="submit" type="submit">Submit</button>
+              </form>
+            </div>
+            <% } %>
+
+    </div>
+
+    <script src="main.js"></script>
+
+    </body>
+    </html>
